@@ -9,19 +9,20 @@ import SwiftUI
 
 struct NewsView: View {
     var model: ArticleModel
+    
     var body: some View {
         ZStack() {
             VStack(spacing: 15) {
-                if model.imageURL != nil {
-                    AsyncImage(url: URL(string: model.imageURL ?? "")) { image in
+                if let imageUrl = model.imageURL {
+                    AsyncImage(url: URL(string: imageUrl)) { image in
                         image
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                     } placeholder: {
                         ProgressView()
                     }
-                    .cornerRadius(30)
-                    .padding(.horizontal, 15)
+                    .cornerRadius(20)
+                    .padding(.horizontal, 10)
                 } else {
                     Image("DefaultNewsImage")
                         .resizable()
@@ -35,14 +36,16 @@ struct NewsView: View {
                         .foregroundColor(.black)
                         .font(.custom("Times New Roman", size: 25)).bold()
                     Spacer()
-                }.padding(.horizontal, 10)
+                }
+                .padding(.horizontal, 10)
                 
                 HStack() {
                     Text(model.author ?? "")
                         .foregroundColor(.gray)
                         .font(.custom("Times New Roman", size: 15))
                     Spacer()
-                }.padding(.horizontal, 10)
+                }
+                .padding(.horizontal, 10)
                 
                 HStack() {
                     Text(model.description ?? "")
@@ -50,9 +53,17 @@ struct NewsView: View {
                         .multilineTextAlignment(.leading)
                         .font(.custom("Times New Roman", size: 20))
                     Spacer()
-                }.padding(.horizontal, 10)
+                }
+                .padding(.horizontal, 10)
                 
-                Link("Show more", destination: model.websiteURL)
+                HStack() {
+                    Link(StringConstants.newsViewButtonTitle, destination: model.websiteURL)
+                        .foregroundColor(.gray)
+                        .font(.custom("Times New Roman", size: 17)).bold()
+                    Spacer()
+                }
+                .padding(.horizontal, 10)
+                Spacer()
             }
         }
     }

@@ -17,10 +17,7 @@ struct HomeView: View {
                     LazyVStack(spacing: 10) {
                         ForEach(viewModel.news, id: \.title) { item in
                             NavigationLink(destination: NewsView(model: item)) {
-                                NewsCell(author: item.author ?? "",
-                                         sourceName: item.source?.name ?? "",
-                                         title: item.title ?? "",
-                                         publishedAt: item.publishedAt ?? "")
+                                NewsCell(item: item)
                             }
                             Divider()
                         }
@@ -28,6 +25,7 @@ struct HomeView: View {
                     .padding(.horizontal, 10)
                 }
                 .padding(.top, 5)
+                
             }.task {
                 await viewModel.loadData()
             }

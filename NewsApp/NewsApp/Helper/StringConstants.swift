@@ -9,7 +9,6 @@ import Foundation
 
 struct StringConstants {
     
-    // HomeView
-    
-    // NewsView
+    //NewsView
+    static let newsViewButtonTitle = "Show more"
 }

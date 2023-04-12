@@ -8,27 +8,22 @@
 import SwiftUI
 
 struct NewsCell: View {
-    @StateObject var viewModel = HomeViewModel()
-    
-    var author: String?
-    var sourceName: String
-    var title: String
-    var publishedAt: String
+    var item: ArticleModel
     
     var body: some View {
         VStack(spacing: 10) {
             HStack(spacing: 5) {
-                Text(author ?? "")
+                Text(item.author ?? "")
                     .foregroundColor(.gray)
                     .font(.custom("Times New Roman", size: 13))
                 
-                if author != nil {
+                if item.author != nil {
                     Divider()
                         .background(Color.black)
                         .frame(height: 15)
                 }
                 
-                Text(sourceName)
+                Text(item.source?.name ?? "")
                     .foregroundColor(.gray)
                     .font(.custom("Times New Roman", size: 15))
                 
@@ -36,17 +31,19 @@ struct NewsCell: View {
             }
             
             HStack(spacing: 0) {
-                Text(title)
+                Text(item.title ?? "")
                     .foregroundColor(.black)
+                    .multilineTextAlignment(.leading)
                     .font(.custom("Times New Roman", size: 25)).bold()
                     
                 Spacer()
             }
             
             HStack(spacing: 0) {
-                Text(viewModel.getDateFromString(dateString: publishedAt), style: .date)
+                Text(item.publishedDate, style: .date)
                     .foregroundColor(.gray)
                     .font(.custom("Times New Roman", size: 15))
+                
                 Spacer()
             }
         }
@@ -55,6 +52,6 @@ struct NewsCell: View {
 
 struct NewsCell_Previews: PreviewProvider {
     static var previews: some View {
-        NewsCell(author: "Manveena Suri", sourceName: "CNN", title: "Dalai Lama apologizes", publishedAt: "2023-04-11T05:27:00Z")
+        NewsCell(item: ArticleModel())
     }
 }
